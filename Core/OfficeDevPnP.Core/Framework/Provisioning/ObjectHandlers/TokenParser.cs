@@ -454,6 +454,7 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers
                         web.Context.Load(termStore.Groups,
                             g => g.Include(
                                 tg => tg.Name,
+                                tg => tg.Id,
                                 tg => tg.TermSets.Include(
                                     ts => ts.Name,
                                     ts => ts.Id)
@@ -464,6 +465,7 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers
                             foreach (var termSet in termGroup.TermSets)
                             {
                                 _tokens.Add(new TermSetIdToken(web, termGroup.Name, termSet.Name, termSet.Id));
+                                _tokens.Add(new TermSetIdToken(web, termGroup.Id.ToString().ToLower(), termSet.Name, termSet.Id));
                             }
                         }
                     }
