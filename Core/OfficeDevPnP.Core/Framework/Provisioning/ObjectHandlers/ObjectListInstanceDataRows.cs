@@ -1059,14 +1059,16 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers
         {
             objectSecurity.ClearSubscopes = true;
             objectSecurity.CopyRoleAssignments = false;
-            web.EnsureProperties(w => w.Title)
-;
+            web.EnsureProperties(w => w.Title);
+
+            string groupSiteTitle = System.Text.RegularExpressions.Regex.Replace(web.Title, "[\"/\\[\\]\\\\:|<>+=;,?*\'@]", "_");
+
             foreach (var ra in RoleAssignments)
             {
                 //Ignore LimitedAccess as this is a result of access permission on a item on a lower level and given automatically
                 foreach (var rb in ra.RoleDefinitionBindings.Where(rb1 => rb1.RoleTypeKind != RoleType.Guest).OrderBy(d => d.Order))
                 {
-                    string memberLoginName = ra.Member.LoginName.Replace(web.Title, "{sitename}");
+                    string memberLoginName = ra.Member.LoginName.Replace(groupSiteTitle, "{groupsitename}");
                     if (ra.PrincipalId == web.AssociatedOwnerGroup.Id)
                     {
                         objectSecurity.RoleAssignments.Add(new Model.RoleAssignment() { Principal = "{associatedownergroup}", RoleDefinition = rb.Name });
