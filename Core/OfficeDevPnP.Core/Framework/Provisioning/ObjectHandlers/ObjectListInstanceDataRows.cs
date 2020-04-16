@@ -442,7 +442,7 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers
             ProcessFormsFolder(web, siteList, listInstance, template, scope);
 
             var defaultColumnValues=siteList.GetDefaultColumnValues();
-            if (defaultColumnValues.Any())
+            if (defaultColumnValues!=null && defaultColumnValues.Any())
             {
                 foreach (var folder in listInstance.Folders)
                 {
