@@ -440,6 +440,18 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers
 
             //Process Forms Folder 
             ProcessFormsFolder(web, siteList, listInstance, template, scope);
+
+            var defaultColumnValues=siteList.GetDefaultColumnValues();
+            if (defaultColumnValues.Any())
+            {
+                foreach (var folder in listInstance.Folders)
+                {
+                    foreach(var defaultValue in defaultColumnValues.Where(df=>df["Path"].Equals($"/{folder.Name}",StringComparison.InvariantCultureIgnoreCase)))
+                    {
+                        folder.DefaultColumnValues.Add(defaultValue["Field"], defaultValue["Value"]);
+                    }
+                }
+            }
             return template;
         }
 
