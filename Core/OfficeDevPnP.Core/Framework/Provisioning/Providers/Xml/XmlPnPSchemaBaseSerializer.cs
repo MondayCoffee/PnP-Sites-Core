@@ -495,7 +495,7 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml
                 InvokeSerializers(dummyTemplate, wrapper, serializers, SerializationAction.Serialize);
 
                 // Remove the dummy template
-                hierarchy.Templates.Remove(dummyTemplate);
+                hierarchy.Templates.RemoveAll(t => t.Id == dummyTemplate.Id);
 
                 // Add every single template to the output
                 var provisioningTemplates = Array.CreateInstance(typeof(TSchemaTemplate), hierarchy.Templates.Count);
