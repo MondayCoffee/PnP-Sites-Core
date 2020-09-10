@@ -839,7 +839,8 @@ namespace OfficeDevPnP.Core.Framework.Provisioning.ObjectHandlers
                 foreach (var entry in entries)
                 {
                     CultureInfo ci = new CultureInfo((int)entry.LCID);
-                    resourceValues.Add(new Tuple<string, string>(ci.Name, entry.Value));
+                    string resValue = ParseString(entry.Value);
+                    resourceValues.Add(new Tuple<string, string>(ci.Name, resValue));
                 }
             }
             return resourceValues;
